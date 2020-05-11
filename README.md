@@ -9,7 +9,7 @@
 </p>
 
 **Support the Project
-Donate with Bitcoin:** 3AN78uHeCoZ4kYJP5cFk6tXroaCxEqumky
+Donate with Bitcoin:** 3AN78uHeCoZ4kYJP5cFk6tXroaCxEqumky <br>
 ![bitcoinqr](https://raw.githubusercontent.com/Felipefury/pxspace-bot/master/ignore_folder/qr.png)
 **Or with PayPal:** contact me
 
