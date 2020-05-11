@@ -34,7 +34,8 @@
 ![template example](https://raw.githubusercontent.com/Felipefury/pxspace-bot/master/ignore_folder/template_example.png)
 2. Click on run.bat (it'll open a window), enjoy xD
 
-**Todo**
+## Todo
 
-> difference folder, this folder shows the wrong pixels of a template compared to the game
->  ignore chunks, lib and node_modules
+**difference folder, this folder shows the wrong pixels of a template compared to the game**
+
+> ignore chunks, lib and node_modules
