@@ -12,11 +12,19 @@
 
 <hr> </hr>
 
-## Installation
+## Installation and Configuration
 
 1. Install node.js
 2. Download and extract the repository to your pc.
 3. Click on install.bat (it'll auto close, if it doesn't close after few minutes, restart it).
-4. 
+4. Geting your id and secrect code:
+    <ul>
+    <li>go <a href="https://pxspace.herokuapp.com/" rel="nofollow">https://pxspace.herokuapp.com/</a></li>
+    <li>press <strong>F12</strong> or <strong> Ctrl + Shift + i </strong></li>
+    <li>open <strong>console</strong> tab</li>
+    <li>paste the line<strong>``` localStorage.user.split(',') ```</strong> and press Enter</li>
+    <li>copy output and paste in <strong>config.json</strong></li>
+    </ul>
 
-0. Click on run.bat, enjoy xD
+
+5. Click on run.bat, enjoy xD
