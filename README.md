@@ -7,7 +7,7 @@
 </p>
 
 ## Support the Project <br>
-**Donate with Bitcoin:** 3AN78uHeCoZ4kYJP5cFk6tXroaCxEqumky <br>
+**Donate with Bitcoin:** 3AN78uHeCoZ4kYJP5cFk6tXroaCxEqumky **Or** <a href="https://raw.githubusercontent.com/Felipefury/pxspace-bot/master/ignore_folder/qr.png">Visit W3Schools</a><br>
 **Or with PayPal:** contact me
 
 <hr> </hr>
@@ -18,5 +18,3 @@
 2. Download and extract the repository to your pc.
 3. Click on install.bat (it'll auto close, if it doesn't close after few minutes, restart it).
 4. Click on run.bat, enjoy xD
-
-![bitcoinqr](https://raw.githubusercontent.com/Felipefury/pxspace-bot/master/ignore_folder/qr.png)
