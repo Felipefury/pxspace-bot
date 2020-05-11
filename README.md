@@ -23,7 +23,7 @@
     <li>press <strong>F12</strong> or <strong> Ctrl + Shift + i </strong></li>
     <li>open <strong>console</strong> tab</li>
     <li>paste the line <code>localStorage.user.split(',')</code> and press Enter</li>
-    <li>copy output and paste in <code>config.json</code> Like this: </li>
+    <li>copy output and paste in <code>config.json</code>, like this:</li>
     </ul>
     
  ![config example](https://raw.githubusercontent.com/Felipefury/pxspace-bot/master/ignore_folder/config.png)
@@ -32,3 +32,4 @@
 
 1. drop the .png images in the bot folder:
 ![template example](https://raw.githubusercontent.com/Felipefury/pxspace-bot/master/ignore_folder/template_example.png)
+2. Click on run.bat (it'll open a window), enjoy xD
