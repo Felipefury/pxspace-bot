@@ -19,7 +19,7 @@
 3. Click on install.bat (it'll auto close, if it doesn't close after few minutes, restart it).
 4. Geting your id and secrect code:
     <ul>
-    <li>go <a href="https://pxspace.herokuapp.com/" rel="nofollow">https://pxspace.herokuapp.com/</a></li>
+    <li>go to <a href="https://pxspace.herokuapp.com/" rel="nofollow">https://pxspace.herokuapp.com/</a></li>
     <li>press <strong>F12</strong> or <strong> Ctrl + Shift + i </strong></li>
     <li>open <strong>console</strong> tab</li>
     <li>paste the line <code>localStorage.user.split(',')</code> and press Enter</li>
