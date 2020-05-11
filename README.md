@@ -23,7 +23,7 @@
     <li>press <strong>F12</strong> or <strong> Ctrl + Shift + i </strong></li>
     <li>open <strong>console</strong> tab</li>
     <li>paste the line <code>localStorage.user.split(',')</code> and press Enter</li>
-    <li>copy output and paste in <strong>config.json</strong></li>
+    <li>copy output and paste in <code>config.json</code> Like this: ![config example](https://raw.githubusercontent.com/Felipefury/pxspace-bot/master/ignore_folder/config.png)</li>
     </ul>
 
 ## Usage
