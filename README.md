@@ -15,7 +15,7 @@
 ## Installation and Configuration
 
 1. Install <a href="https://nodejs.org/en/">Node.js </a>
-2. Download and extract the repository to your pc.
+2. Download and extract the <a href="https://github.com/Felipefury/pxspace-bot/archive/master.zip">repository </a>to your pc.
 3. Click on install.bat (it'll auto close, if it doesn't close after few minutes, restart it).
 4. Geting your id and secrect code:
     <ul>
