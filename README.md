@@ -33,3 +33,8 @@
 1. drop the .png images in the bot folder:
 ![template example](https://raw.githubusercontent.com/Felipefury/pxspace-bot/master/ignore_folder/template_example.png)
 2. Click on run.bat (it'll open a window), enjoy xD
+
+**Todo**
+
+> difference folder, this folder shows the wrong pixels of a template compared to the game
+>  ignore chunks, lib and node_modules
