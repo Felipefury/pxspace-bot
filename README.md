@@ -17,4 +17,6 @@
 1. Install node.js
 2. Download and extract the repository to your pc.
 3. Click on install.bat (it'll auto close, if it doesn't close after few minutes, restart it).
-4. Click on run.bat, enjoy xD
+4. 
+
+0. Click on run.bat, enjoy xD
