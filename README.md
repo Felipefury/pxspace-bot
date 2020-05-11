@@ -38,4 +38,4 @@
 
 **difference folder, this folder shows the wrong pixels of a template compared to the game**
 
-> ignore chunks, lib and node_modules
+> ignore chunks, ignore_folder, lib and node_modules
