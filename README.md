@@ -8,7 +8,7 @@
     </a>
 </p>
 
-**Support the Project
+## Support the Project <br>
 Donate with Bitcoin:** 3AN78uHeCoZ4kYJP5cFk6tXroaCxEqumky <br>
 **Or with PayPal:** contact me
 
