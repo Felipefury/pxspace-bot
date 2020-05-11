@@ -14,7 +14,7 @@
 
 ## Installation and Configuration
 
-1. Install node.js
+1. Install <a href="https://nodejs.org/en/">Node.js </a>
 2. Download and extract the repository to your pc.
 3. Click on install.bat (it'll auto close, if it doesn't close after few minutes, restart it).
 4. Geting your id and secrect code:
