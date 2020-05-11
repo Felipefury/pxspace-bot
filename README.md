@@ -22,11 +22,7 @@
     <li>go <a href="https://pxspace.herokuapp.com/" rel="nofollow">https://pxspace.herokuapp.com/</a></li>
     <li>press <strong>F12</strong> or <strong> Ctrl + Shift + i </strong></li>
     <li>open <strong>console</strong> tab</li>
-    <li>paste the line<strong>```javascript 
-localStorage.user.split(',') 
-```</strong> and press Enter</li>
+    <li>paste the line <strong>localStorage.user.split(',')</strong> and press Enter</li>
     <li>copy output and paste in <strong>config.json</strong></li>
     </ul>
-
-
 5. Click on run.bat, enjoy xD
