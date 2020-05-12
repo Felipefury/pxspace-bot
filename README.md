@@ -7,7 +7,7 @@
 </p>
 
 ## Support the Project <br>
-**Donate with Bitcoin:** 3AN78uHeCoZ4kYJP5cFk6tXroaCxEqumky **Or** <a href="https://raw.githubusercontent.com/Felipefury/pxspace-bot/master/ignore_folder/qr.png">QR Bitcoin addresss</a><br>
+**Donate with Bitcoin:** 1ADioYCgDZm4w4seNi2BmESjRtL4VqRokx **Or** <a href="https://raw.githubusercontent.com/Felipefury/pxspace-bot/master/ignore_folder/qr.png">QR Bitcoin addresss</a><br>
 **Or with PayPal:** contact me
 
 <hr> </hr>
