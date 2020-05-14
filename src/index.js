@@ -198,7 +198,7 @@ function Bot() {
 
                         var arrayRGB = `[${RGBimg.r},${RGBimg.g},${RGBimg.b}]`
 
-                        if (RGBimg.a == 255 && typeof colorsIds[arrayRGB] != undefined) {
+                         if (RGBimg.a == 255 && typeof colorsIds[arrayRGB] != "undefined") {
                             if (arrayRGB != `[${RGBchunk.r},${RGBchunk.g},${RGBchunk.b}]`) {
 
                                 dataImg[`x:${x+TX},y:${y+TY}`] = colorsIds[arrayRGB]
