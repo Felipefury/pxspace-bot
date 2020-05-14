@@ -37,8 +37,7 @@ findChunk = function(x, y, w, h) {
 }
 
 chunkKey = function(y, x) {
-    let key = ((y & 0x1f) << 0x5) + (x & 0x1f)
-    return key
+    return ((y & 0x1f) << 0x5) + (x & 0x1f)
 }
 
 function Bot() {
@@ -104,7 +103,7 @@ function Bot() {
 
             console.log('[BOT] Downloading Chunk: ', k)
 
-            var chunkDecoded = decode(d);
+            var chunkDecoded = decode(d || '');
             var a7 = [];
             var a8 = 0x80 * 0x100;
             var a9;
