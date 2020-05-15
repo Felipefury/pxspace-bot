@@ -32,7 +32,7 @@
 
 1. drop the .png images in the bot folder:
 ![template example](https://raw.githubusercontent.com/Felipefury/pxspace-bot/master/ignore_folder/template_example.png)
-2. ***v3.0*** Image name must match: **QUEUE_X_Y_STRATEGY_TIMELAPSETIMER, Example: 0_-30_70_LUF_120 (strategy and timer is optional)**
+2. ***v3.0*** Image name must match: **QUEUE_X_Y_STRATEGY_TIMELAPSETIMER, Example: 0_-30_70_LUF_120 (strategy and timer is optional, timelapse timer in seconds)**
 2. ***v2.0*** templates are configurable by cmd
 3. Click on run.bat (it'll open a window), enjoy xD
 
