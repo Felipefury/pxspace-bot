@@ -32,10 +32,17 @@
 
 1. drop the .png images in the bot folder:
 ![template example](https://raw.githubusercontent.com/Felipefury/pxspace-bot/master/ignore_folder/template_example.png)
-2. Click on run.bat (it'll open a window), enjoy xD
+2. ***v3.0*** Image name must match: **QUEUE_X_Y_ESTRATEGY_TIMELAPSETIMER, Example: 0_-30_70_LUF_120(optional)**
+2. ***v2.0*** templates are configurable by cmd
+3. Click on run.bat (it'll open a window), enjoy xD
+
+## Strategies
+
+**LUF = LinearUpperLeft
+LBR = LinearBottomRigth
+RDM = Random
+JMP = Jump a few pixels**
 
 ## Todo
 
-**difference folder, this folder shows the wrong pixels of a template compared to the game**
-
-> ignore chunks, ignore_folder, lib and node_modules
+> difference folder, this folder shows the wrong pixels of a template compared to the game
