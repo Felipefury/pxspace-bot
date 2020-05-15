@@ -38,9 +38,9 @@
 
 ## Strategies
 
-**LUF = LinearUpperLeft
-LBR = LinearBottomRigth
-RDM = Random
+**LUF = LinearUpperLeft <br>
+LBR = LinearBottomRigth <br>
+RDM = Random pixels <br>
 JMP = Jump a few pixels**
 
 ## Todo
