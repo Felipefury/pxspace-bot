@@ -348,7 +348,7 @@ run = async function() {
                 let estrategy, timer, x, y
 
                 if(!cfg[3]) estrategy = "LUF"
-                else estrategy = cfg[3]
+                else estrategy = cfg[3].replace(".png", "")
                 if(!cfg[4]) timer = 0
                 else timer = parseInt(cfg[4].replace(".png", ""))
 
