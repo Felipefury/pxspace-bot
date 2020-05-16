@@ -46,3 +46,9 @@ JMP = Jump a few pixels**
 ## Todo
 
 > difference folder, this folder shows the wrong pixels of a template compared to the game
+
+***corrections and suggestions***
+
+- [ ] Fix y 0 line bug
+- [ ] Connect more than one account in the bot
+- [ ] More information in the log
