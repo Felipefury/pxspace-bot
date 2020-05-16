@@ -226,7 +226,7 @@ function Bot() {
         jimp.read('./' + images[template_config.num].png, function(err, img) {
             if (err) return console.log(err)
             jimp.read('./chunks/chunk_' + images[template_config.num].png, function(err, chunk) {
-
+                if (err) return console.log(err)
                 for (y = 0; y < img.bitmap.height; y++) {
                     for (x = 0; x < img.bitmap.width; x++) {
 
