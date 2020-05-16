@@ -198,7 +198,7 @@ function Bot() {
                     if (z == chunks.length) {
 
                         setTimeout(() => {
-                            if(template_config.firstRun == false) {
+                            if(template_config.firstRun == false && images[template_config.num].timer > 0) {
                                 if(!fs.existsSync('./timelapse/' + image_png .replace(".png", ""))) {
                                     fs.mkdirSync('./timelapse/' + image_png.replace(".png", ""))
                                 };
