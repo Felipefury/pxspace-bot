@@ -173,10 +173,6 @@ function Bot() {
         that.opitions['h'] = h
         that.opitions['num'] = num
 
-        if(!fs.existsSync('./difference')) fs.mkdirSync('./difference');
-        if(!fs.existsSync('./chunks')) fs.mkdirSync('./chunks');
-        if(!fs.existsSync('./timelapse')) fs.mkdirSync('./timelapse');
-
         if(that.net.on == false) {
             this.join()
         } else {
@@ -344,6 +340,10 @@ function Bot() {
 run = async function() {
     setTimeout(() => {console.log('ignore')}, 100000000);
     if(!config[0] || !config[1]) return console.log('[' + getHours() + '] no tokens have been defined or are correct configured, follow the steps of github')
+
+    if(!fs.existsSync('./difference')) fs.mkdirSync('./difference');
+    if(!fs.existsSync('./chunks')) fs.mkdirSync('./chunks');
+    if(!fs.existsSync('./timelapse')) fs.mkdirSync('./timelapse');
 
     fs.readdir(process.cwd(), function(err, files) {
         if (err) return console.log(err);
