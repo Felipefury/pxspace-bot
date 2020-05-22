@@ -38,10 +38,12 @@
 
 ## Strategies
 
-**LUF = LinearUpperLeft <br>
-LBR = LinearBottomRigth <br>
-RDM = Random pixels <br>
-JMP = Jump a few pixels**
+**LUF = Linear Upper Left <br>
+  LBR = Linear Bottom Rigth <br>
+  RDM = Random pixels <br>
+  JMP = Jump a few pixels <br>
+  CHU = Chess Upper <br>
+  CHB = Chess Bottom** <br>
 
 ## Todo
 
@@ -49,6 +51,6 @@ JMP = Jump a few pixels**
 
 ***corrections and suggestions***
 
-- [ ] Fix y 0 line bug
+- [x] Fix y 0 line bug
 - [ ] Connect more than one account in the bot
-- [ ] More information in the log
+- [x] More information in the log (press "b" or "n" for more information)
