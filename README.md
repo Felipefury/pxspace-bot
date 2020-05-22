@@ -39,7 +39,7 @@
 ## Strategies
 
 **LUF = Linear Upper Left <br>
-  LBR = Linear Bottom Rigth <br>
+  LBR = Linear Bottom Right <br>
   RDM = Random pixels <br>
   JMP = Jump a few pixels <br>
   CHU = Chess Upper <br>
