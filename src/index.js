@@ -23,7 +23,7 @@ function Bot() {
         interval: null
     }
 
-    that.opitions = {
+    that.options = {
         first_run: true,
         pixels: {
             "last_minute": 0, 
@@ -56,13 +56,13 @@ function Bot() {
 
             } else if(event.discord) {
                 that.net.on = true
-                console.log('[' + getHours() + '] Welcome', event.discord.username + ', your id:', that.opitions.id)
+                console.log('[' + getHours() + '] Welcome', event.discord.username + ', your id:', that.options.id)
                 that.getChunk()
             }
         });
 
         socket.on('id', (id) => {
-            that.opitions.id = id
+            that.options.id = id
         })
 
         socket.on('error', (error) => {
@@ -87,25 +87,25 @@ function Bot() {
 
         socket.on('disconnect', (reason) => {
             console.log("socket disconnect reason:", reason + ", reestablishing connection...")
-            imageReader(that.opitions.num+1)
+            imageReader(that.options.num+1)
             that.net.ready = false
             that.net.on = false
         });
     }
 
     that.getChunk = function() {
-        if(that.opitions.first_run) console.log('[' + getHours() + '] Downloading chunks');
+        if(that.options.first_run) console.log('[' + getHours() + '] Downloading chunks');
         var chunk_num = 0
         var chunks_data = []
 
         send = function() {
-            socket.emit('ch', images[that.opitions.num].chunks[chunk_num][4])
+            socket.emit('ch', images[that.options.num].chunks[chunk_num][4])
 
-            chunks_data.push(images[that.opitions.num].chunks[chunk_num][4])
+            chunks_data.push(images[that.options.num].chunks[chunk_num][4])
             chunk_num++
 
-            if(that.opitions.first_run == false) {
-                if (chunk_num == images[that.opitions.num].chunks.length) {
+            if(that.options.first_run == false) {
+                if (chunk_num == images[that.options.num].chunks.length) {
                     setTimeout(() => {
                         that.createChunk()
                     }, 3000);
@@ -149,8 +149,8 @@ function Bot() {
                 require("fs").writeFile(`./chunks/${p}.png`, base64Data, 'base64', function(err) {
                     if (err) return console.log(err);
 
-                    if(that.opitions.first_run == true) {
-                        if(chunk_num == images[that.opitions.num].chunks.length) {
+                    if(that.options.first_run == true) {
+                        if(chunk_num == images[that.options.num].chunks.length) {
                             setTimeout(() => {
                                 chunk_num = 0
                                 that.createChunk()
@@ -170,14 +170,14 @@ function Bot() {
     }.bind(that);
 
     that.start = function(w, h, num) {
-        that.opitions['w'] = w
-        that.opitions['h'] = h
-        that.opitions['num'] = num
+        that.options['w'] = w
+        that.options['h'] = h
+        that.options['num'] = num
 
         if(that.net.on == false) {
             this.join()
         } else {
-            that.opitions.first_run = true
+            that.options.first_run = true
             that.getChunk()
         }
 
@@ -192,24 +192,24 @@ function Bot() {
     }.bind(that);
 
     that.createChunk = function() {
-        if(that.opitions.first_run) console.log('[' + getHours() + '] Finishing chunk');
+        if(that.options.first_run) console.log('[' + getHours() + '] Finishing chunk');
 
-        var Chunk = new jimp(that.opitions.w+1, that.opitions.h, function(err, new_image) {
+        var Chunk = new jimp(that.options.w+1, that.options.h, function(err, new_image) {
             if (err) return console.log(err)
 
-            for(let i = 0;i < images[that.opitions.num].chunks.length; i++) {
-                jimp.read('./chunks/' + images[that.opitions.num].chunks[i][4] + '.png', function(err, current_chunk) {
+            for(let i = 0;i < images[that.options.num].chunks.length; i++) {
+                jimp.read('./chunks/' + images[that.options.num].chunks[i][4] + '.png', function(err, current_chunk) {
                     if (err) return console.log(err)
 
-                    new_image.composite(current_chunk, images[that.opitions.num].chunks[i][2]+1, images[that.opitions.num].chunks[i][3]);
+                    new_image.composite(current_chunk, images[that.options.num].chunks[i][2]+1, images[that.options.num].chunks[i][3]);
                 })
             }
             setTimeout(() => {
-                if(that.opitions.first_run == false && images[that.opitions.num].timer > 0) {
-                    new_image.write('./timelapse/' + images[that.opitions.num].png.replace(".png", "") + '/' + Date.now() + '.png')
+                if(that.options.first_run == false && images[that.options.num].timer > 0) {
+                    new_image.write('./timelapse/' + images[that.options.num].png.replace(".png", "") + '/' + Date.now() + '.png')
                 } else {
-                    new_image.crop(1, 0, that.opitions.w, that.opitions.h); 
-                    new_image.write('./chunks/chunk_' + images[that.opitions.num].png, function() {
+                    new_image.crop(1, 0, that.options.w, that.options.h); 
+                    new_image.write('./chunks/chunk_' + images[that.options.num].png, function() {
                         that.compare()
                     })
                 }                
@@ -222,11 +222,11 @@ function Bot() {
         pixels = {}
         defense = {}
         template = {}
-        jimp.read('./' + images[that.opitions.num].png, function(err, img) {
+        jimp.read('./' + images[that.options.num].png, function(err, img) {
             if (err) return console.log(err)
-            jimp.read('./chunks/chunk_' + images[that.opitions.num].png, function(err, chunk) {
+            jimp.read('./chunks/chunk_' + images[that.options.num].png, function(err, chunk) {
                 if (err) return console.log(err)
-                if(that.opitions.first_run) console.log('[' + getHours() + '] Comparing image / chunk');
+                if(that.options.first_run) console.log('[' + getHours() + '] Comparing image / chunk');
                 for (y = 0; y < img.bitmap.height; y++) {
                     for (x = 0; x < img.bitmap.width; x++) {
 
@@ -237,11 +237,11 @@ function Bot() {
 
                         if (RGBimg.a == 255 && typeof colorsIds[arrayRGB] != "undefined") {
 
-                            template[`${x+images[that.opitions.num].x},${y+images[that.opitions.num].y}`] = colorsIds[arrayRGB]
+                            template[`${x+images[that.options.num].x},${y+images[that.options.num].y}`] = colorsIds[arrayRGB]
 
-                            that.opitions.template_pixels++
+                            that.options.template_pixels++
                             if (arrayRGB != `[${RGBchunk.r},${RGBchunk.g},${RGBchunk.b}]`) {
-                                pixels[`${x+images[that.opitions.num].x},${y+images[that.opitions.num].y}`] = colorsIds[arrayRGB]
+                                pixels[`${x+images[that.options.num].x},${y+images[that.options.num].y}`] = colorsIds[arrayRGB]
 
                                 let red = jimp.rgbaToInt(255, 0, 0, 255);
                                 chunk.setPixelColor(red, x, y)
@@ -253,9 +253,9 @@ function Bot() {
                         }
                     }
                 }
-                if(that.opitions.first_run) console.log('[' + getHours() + '] Waiting 20 seconds');
-                chunk.write('./difference/' + images[that.opitions.num].png)
-                that.opitions.first_run = false
+                if(that.options.first_run) console.log('[' + getHours() + '] Waiting 20 seconds');
+                chunk.write('./difference/' + images[that.options.num].png)
+                that.options.first_run = false
                 that.net.ready = true
                 that.paint()
             })
@@ -272,7 +272,7 @@ function Bot() {
             if (a4 >> 0xf) a4 = -((~a4 >>> 0x0 & 0xffff) + 0x1);
             if (a5 >> 0xf) a5 = -((~a5 >>> 0x0 & 0xffff) + 0x1);
 
-            if (a4 >= images[that.opitions.num].x && a4 <= (images[that.opitions.num].x + that.opitions.w) - 1 && a5 >= images[that.opitions.num].y && a5 <= (images[that.opitions.num].y + that.opitions.h) - 1 && typeof template[`${a4},${a5}`] != "undefined") {
+            if (a4 >= images[that.options.num].x && a4 <= (images[that.options.num].x + that.options.w) - 1 && a5 >= images[that.options.num].y && a5 <= (images[that.options.num].y + that.options.h) - 1 && typeof template[`${a4},${a5}`] != "undefined") {
                 that.insta_defense(a4, a5, a3[0x4 + a6])
             }
         }
@@ -286,7 +286,7 @@ function Bot() {
 
                 defense[`${x},${y}`] = template[`${x},${y}`]
                 event.event = "\x1b[41mAttack\x1b[0m"
-                that.opitions.pixels.attacks++
+                that.options.pixels.attacks++
 
             } else {
 
@@ -294,7 +294,7 @@ function Bot() {
                     delete defense[`${x},${y}`]
                     delete pixels[`${x},${y}`]
                     event.event = "\x1b[32mDefense\x1b[0m"
-                    that.opitions.pixels.attacks--
+                    that.options.pixels.attacks--
 
                 } else if (typeof pixels[`${x},${y}`] != "undefined") {
                     delete pixels[`${x},${y}`]
@@ -311,13 +311,13 @@ function Bot() {
         that.net.interval = setInterval(() => {
             for (i = 0; i < 10; i++) {
                 if(Object.keys(pixels).length == 0 && that.net.ready == true) {
-                    console.log('[' + getHours() + '] ' + images[that.opitions.num].png.replace(".png","") + ', finished')
+                    console.log('[' + getHours() + '] ' + images[that.options.num].png.replace(".png","") + ', finished')
                     clearInterval(that.net.interval)
                     that.net.ready = false
-                    imageReader(that.opitions.num+1)
+                    imageReader(that.options.num+1)
                     return;
                 }
-                if(that.net.ready) painter(images[that.opitions.num].estrategy)
+                if(that.net.ready) painter(images[that.options.num].estrategy)
             }
         }, 20001);
 
@@ -326,9 +326,9 @@ function Bot() {
                 return;
             }
 
-            that.opitions.pixels.time = (Object.keys(pixels).length*2) / that.opitions.pixels.last_minute
-            that.opitions.pixels.time = parseDuration(that.opitions.pixels.time*30000)
-            that.opitions.pixels.last_minute = 0
+            that.options.pixels.time = (Object.keys(pixels).length*2) / that.options.pixels.last_minute
+            that.options.pixels.time = parseDuration(that.options.pixels.time*30000)
+            that.options.pixels.last_minute = 0
 
         }, 60000);
     }.bind(that);
@@ -430,14 +430,14 @@ process.stdin.on('keypress', (str, key) => {
         process.exit();
     } else if(key.name === 'b'){
 
-        let output = [{"Template": images[bots[0].opitions.num].png.replace(".png",""), "Estrategy": images[bots[0].opitions.num].estrategy, "X,Y": [images[bots[0].opitions.num].x,images[bots[0].opitions.num].y].join(","), "Token": config[1].substring(5,0) + '*'.repeat(3) + config[1].substring(config[1].length, config[1].length-5), "Id": bots[0].opitions.id}]
+        let output = [{"Template": images[bots[0].options.num].png.replace(".png",""), "Estrategy": images[bots[0].options.num].estrategy, "X,Y": [images[bots[0].options.num].x,images[bots[0].options.num].y].join(","), "Token": config[1].substring(5,0) + '*'.repeat(3) + config[1].substring(config[1].length, config[1].length-5), "Id": bots[0].options.id}]
         console.table(output)
 
     } else if(key.name === 'n' && bots[0]) {
 
-        let percentage = (Object.keys(pixels).length / bots[0].opitions.template_pixels).toFixed(2)
+        let percentage = (Object.keys(pixels).length / bots[0].options.template_pixels).toFixed(2)
 
-        let output = [{"Last Minute": bots[0].opitions.pixels.last_minute,"Remaining Pixels": Object.keys(pixels).length + '/' + bots[0].opitions.template_pixels,"Time Left": JSON.stringify(bots[0].opitions.pixels.time).replace(/[{}"]/g,''),"Attacks": bots[0].opitions.pixels.attacks, [percentage * 100 + '%']: '█'.repeat(percentage*10) + '░'.repeat(10 - (percentage*10))}]
+        let output = [{"Last Minute": bots[0].options.pixels.last_minute,"Remaining Pixels": Object.keys(pixels).length + '/' + bots[0].options.template_pixels,"Time Left": JSON.stringify(bots[0].options.pixels.time).replace(/[{}"]/g,''),"Attacks": bots[0].options.pixels.attacks, [(percentage * 100 -100)*-1 + '%']: '█'.repeat(10 - (percentage*10)) + '░'.repeat(percentage*10) }]
         console.table(output)
     }
 })
@@ -537,7 +537,7 @@ painter = function(estrategy) {
         delete defense[`${x},${y}`]
     } else {
         delete pixels[`${x},${y}`]
-        bots[0].opitions.pixels.placed_pixels++
+        bots[0].options.pixels.placed_pixels++
     }
 
     bots[0].pixel(x, y, c)
@@ -559,10 +559,10 @@ getHours = function() {
  
 output = function(pixel) {
     if(pixel.event != "Attack") {
-        bots[0].opitions.pixels.last_minute++
+        bots[0].options.pixels.last_minute++
     } else {
-        bots[0].opitions.pixels.last_minute--
-        bots[0].opitions.pixels.attacks++
+        bots[0].options.pixels.last_minute--
+        bots[0].options.pixels.attacks++
     }
 
     console.log("[" + pixel.date + "] " + pixel.event + " > " + pixel.x + "," + pixel.y + " " + pixel.c)   
