@@ -7,6 +7,7 @@ const io = require('socket.io-client'),
 var bots = {},
     defense = {},
     pixels = {},
+    template = {},
     images = [];
 
 require('./lib/base64-binary.js');
@@ -234,6 +235,9 @@ function Bot() {
                         var arrayRGB = `[${RGBimg.r},${RGBimg.g},${RGBimg.b}]`
 
                         if (RGBimg.a == 255 && typeof colorsIds[arrayRGB] != "undefined") {
+
+                            template[`${x+images[that.opitions.num].x},${y+images[that.opitions.num].y}`] = colorsIds[arrayRGB]
+
                             that.opitions.template_pixels++
                             if (arrayRGB != `[${RGBchunk.r},${RGBchunk.g},${RGBchunk.b}]`) {
                                 pixels[`${x+images[that.opitions.num].x},${y+images[that.opitions.num].y}`] = colorsIds[arrayRGB]
@@ -242,7 +246,6 @@ function Bot() {
                                 chunk.setPixelColor(red, x, y)
 
                             } else {
-
                                 let opacity = jimp.rgbaToInt(RGBchunk.r, RGBchunk.g, RGBchunk.b, 30);
                                 chunk.setPixelColor(opacity, x, y)
                             }
@@ -268,7 +271,7 @@ function Bot() {
             if (a4 >> 0xf) a4 = -((~a4 >>> 0x0 & 0xffff) + 0x1);
             if (a5 >> 0xf) a5 = -((~a5 >>> 0x0 & 0xffff) + 0x1);
 
-            if (a4 >= images[that.opitions.num].x && a4 <= (images[that.opitions.num].x + that.opitions.w) - 1 && a5 >= images[that.opitions.num].y && a5 <= (images[that.opitions.num].y + that.opitions.h) - 1) {
+            if (a4 >= images[that.opitions.num].x && a4 <= (images[that.opitions.num].x + that.opitions.w) - 1 && a5 >= images[that.opitions.num].y && a5 <= (images[that.opitions.num].y + that.opitions.h) - 1 && typeof template[`${a4},${a5}`] != "undefined") {
                 that.insta_defense(a4, a5, a3[0x4 + a6])
             }
         }
@@ -276,17 +279,11 @@ function Bot() {
 
     that.insta_defense = function(x, y, c) {
 
-        jimp.read('./' + images[that.opitions.num].png, function(err, template) {
-            if (err) return console.log(err)
-
-            TemplateRGB = jimp.intToRGBA(template.getPixelColor((images[that.opitions.num].x - x) * -1, (images[that.opitions.num].y - y) * -1))
-            var idtemplate = `[${TemplateRGB.r},${TemplateRGB.g},${TemplateRGB.b}]`
-
             let event = {"date": getHours(),"event": false,"x": x,"y": y,"c": c}
 
-            if (colorsIds[idtemplate] != c) {
-                if (TemplateRGB.a < 255) return
-                defense[`${x},${y}`] = colorsIds[idtemplate]
+            if (template[`${x},${y}`] != c) {
+
+                defense[`${x},${y}`] = template[`${x},${y}`]
                 event.event = "\x1b[41mAttack\x1b[0m"
                 that.opitions.pixels.attacks++
 
@@ -294,17 +291,17 @@ function Bot() {
 
                 if (typeof defense[`${x},${y}`] != "undefined") {
                     delete defense[`${x},${y}`]
+                    delete pixels[`${x},${y}`]
                     event.event = "\x1b[32mDefense\x1b[0m"
                     that.opitions.pixels.attacks--
-                }
 
-                if (typeof pixels[`${x},${y}`] != "undefined") {
+                } else if (typeof pixels[`${x},${y}`] != "undefined") {
                     delete pixels[`${x},${y}`]
                     event.event = "\x1b[32mHelp\x1b[0m"
                 }
             }
             if(event.event != false) output(event)
-        })
+
 
     }.bind(that);
 
@@ -444,6 +441,8 @@ process.stdin.on('keypress', (str, key) => {
     }
 })
 
+let jump_pixels = 0
+
 painter = function(estrategy) {
 
     if (Object.keys(defense).length > 0) {
@@ -475,7 +474,7 @@ painter = function(estrategy) {
     }
 
     paint_ChessUpper = function() {
-        for(let i = 0; i < Object.keys(pixels).length -1; i++) {
+        for(let i = jump_pixels; i < Object.keys(pixels).length -1; i++) {
             XY = arrayPixel[i]
 
             x = parseInt(XY.substring(0, XY.indexOf(',')))
@@ -485,13 +484,15 @@ painter = function(estrategy) {
                 c = pixels[arrayPixel[i]]
                 break;
             }
+
+            jump_pixels++
         }
 
         if(typeof c == "undefined") paint_LinearUpperLeft()
     }
 
     paint_ChessBottom = function() {
-        for(let i = Object.keys(pixels).length -1; i > 0; i--) {
+        for(let i = Object.keys(pixels).length -1; i > jump_pixels; i--) {
             XY = arrayPixel[i]
 
             x = parseInt(XY.substring(0, XY.indexOf(',')))
@@ -501,6 +502,8 @@ painter = function(estrategy) {
                 c = pixels[arrayPixel[i]]
                 break;
             }
+            
+            jump_pixels++
         }
 
         if(typeof c == "undefined") paint_LinearUpperLeft()
