@@ -221,6 +221,7 @@ function Bot() {
     that.compare = function() {
         pixels = {}
         defense = {}
+        template = {}
         jimp.read('./' + images[that.opitions.num].png, function(err, img) {
             if (err) return console.log(err)
             jimp.read('./chunks/chunk_' + images[that.opitions.num].png, function(err, chunk) {
@@ -502,7 +503,7 @@ painter = function(estrategy) {
                 c = pixels[arrayPixel[i]]
                 break;
             }
-            
+
             jump_pixels++
         }
 
