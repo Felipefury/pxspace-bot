@@ -54,3 +54,4 @@
 - [x] Fix y 0 line bug
 - [ ] Connect more than one account in the bot
 - [x] More information in the log (press "b" or "n" for more information)
+- [ ] More strategies
