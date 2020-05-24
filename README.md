@@ -38,20 +38,31 @@
 
 ## Strategies
 
-**LUF = Linear Upper Left <br>
-  LBR = Linear Bottom Right <br>
-  RDM = Random pixels <br>
-  JMP = Jump a few pixels <br>
-  CHU = Chess Upper <br>
-  CHB = Chess Bottom** <br>
-
-## Todo
-
-> difference folder, this folder shows the wrong pixels of a template compared to the game
+* **Linear**
+    * **LUL** top left to top right, chess mode use **LULCH**
+    * **LUB** top left to bottom left, chess mode use **LUBCH**
+    * **LBR** bottom right to bottom left, chess mode use **LBRCH**
+    * **LBU** bottom right to top right, chess mode use **LBUCH**
+    * **JMP** jump a few pixels.
+    
+* **Random**
+    * **RDM** paint random pixels.
+    
+* **Radial**
+    * **RAD** expands from center creating a circle, chess mode use **RADCH**
+    * **RADOT** outside to the center, chess mode use **RADOTCH**
+    * **RADTL** expands from top left creating a circle.
+    * **RADTR** expands from top right creating a circle.
+    * **RADBL** expands from bottom left creating a circle.
+    * **RADBR** expands from bottom right creating a circle.
 
 ***corrections and suggestions***
 
 - [x] Fix y 0 line bug
-- [ ] Connect more than one account in the bot
+- [ ] Connect more than one account in the bot (a possible update make this impossible)
 - [x] More information in the log (press "b" or "n" for more information)
-- [ ] More strategies
+- [x] More strategies
+
+## Todo
+
+> difference folder, this folder shows the wrong pixels of a template compared to the game
