@@ -21,7 +21,7 @@ function Bot() {
         broke: false,
         ready: false,
         interval: null
-    }
+    };
 
     that.options = {
         first_run: true,
@@ -47,7 +47,6 @@ function Bot() {
             socket.emit('lg', config[0], config[1])
         });
 
-
         socket.on("lg",function(event) {
             if(event.error) {
                 console.log('[' + getHours() + '] an error when logging:', event.error)
@@ -70,9 +69,7 @@ function Bot() {
         });
 
         socket.on('px', (px) => {
-            if(that.net.ready) {
-                that.receivedPixel(px)
-            }
+            if(that.net.ready) that.receivedPixel(px)
         });
 
         socket.on('connect_error', (error) => {
@@ -222,6 +219,8 @@ function Bot() {
         pixels = {}
         defense = {}
         template = {}
+        let pre = [],
+            estrategy = images[that.options.num].estrategy;
         jimp.read('./' + images[that.options.num].png, function(err, img) {
             if (err) return console.log(err)
             jimp.read('./chunks/chunk_' + images[that.options.num].png, function(err, chunk) {
@@ -241,7 +240,10 @@ function Bot() {
 
                             that.options.template_pixels++
                             if (arrayRGB != `[${RGBchunk.r},${RGBchunk.g},${RGBchunk.b}]`) {
-                                pixels[`${x+images[that.options.num].x},${y+images[that.options.num].y}`] = colorsIds[arrayRGB]
+
+                                if(estrategy.startsWith("RAD") || estrategy.startsWith("LBU") || estrategy.startsWith("LUB"))
+                                    pre.push([x, y, colorsIds[arrayRGB]])
+                                else pixels[`${x+images[that.options.num].x},${y+images[that.options.num].y}`] = colorsIds[arrayRGB]
 
                                 let red = jimp.rgbaToInt(255, 0, 0, 255);
                                 chunk.setPixelColor(red, x, y)
@@ -253,8 +255,55 @@ function Bot() {
                         }
                     }
                 }
+
                 if(that.options.first_run) console.log('[' + getHours() + '] Waiting 20 seconds');
                 chunk.write('./difference/' + images[that.options.num].png)
+
+                if(estrategy.startsWith("RAD")) {
+                    let offx = 0,
+                        offy = 0;
+
+                    switch (estrategy) {
+
+                        case "RADTL": offy = offx = 0; break;
+                        case "RADTR": offx = that.options.w; break;
+                        case "RADBL": offy = that.options.h; break;
+                        case "RADBR": 
+                            offx = that.options.w;
+                            offy = that.options.h;
+                        break;
+                        default:
+                            offx = that.options.w / 2;
+                            offy = that.options.h / 2;
+                    }
+
+                    pre.sort((a, b) => dist(a[0] - offx, a[1] - offy) - dist(b[0] - offx, b[1] - offy));
+
+                    for(let i = 0; i < pre.length; i++) {
+                        pixels[`${pre[i][0]+images[that.options.num].x},${pre[i][1]+images[that.options.num].y}`] = pre[i][2]
+                    }
+
+                } else if(estrategy.startsWith("LBU") || estrategy.startsWith("LUB")) {
+                    let sortY,
+                        sorted;
+                        console.log(estrategy)
+
+                    switch (estrategy.substring(0,3)) {
+                        case 'LBU': 
+                            sortY = pre.sort((a, b) => parseFloat(b[1]) - parseFloat(a[1]));
+                            sorted = sortY.sort((a, b) => parseFloat(b[0]) - parseFloat(a[0]));
+                        break;
+                        case 'LUB':
+                            sortY = pre.sort((a, b) => parseFloat(a[1]) - parseFloat(b[1]));
+                            sorted = sortY.sort((a, b) => parseFloat(a[0]) - parseFloat(b[0]));
+                        break;
+                    }
+
+                    for(let i = 0; i < sorted.length; i++) {
+                        pixels[`${sorted[i][0]+images[that.options.num].x},${sorted[i][1]+images[that.options.num].y}`] = sorted[i][2]
+                    }
+                }
+
                 that.options.first_run = false
                 that.net.ready = true
                 that.paint()
@@ -349,16 +398,16 @@ run = async function() {
         for (i = 0; i < files.length; i++) {
             if (require('path').extname(files[i]) == ".png") {
                 
-                let png = files[i].replace(".png", ""), set = png.split("_"), estrategy = ["LUF","LBR","RDM","JMP","CHB","CHU"], timer = 0
+                let png = files[i].replace(".png", ""), set = png.split("_"), estrategy = ["LBUCH","LUBCH","LBU","LUB","RADOT","LUL","LBR","RDM","JMP","LBRCH","LULCH",'RAD','RADTL','RADCH','RADOTCH','RADTR','RADBL','RADBR'], timer = 0
 
                 if(png.indexOf("_") == -1 || set.length <= 2 || isNaN(set[0]) == true) {
                     continue;
                 };
 
-                if(!set[3] || estrategy.indexOf(set[3]) == -1) {
-                    estrategy = "LUF"
+                if(!set[3] || estrategy.indexOf(set[3].toUpperCase()) == -1) {
+                    estrategy = "LUL"
                 } else {
-                    estrategy = set[3]
+                    estrategy = set[3].toUpperCase()
                 };
 
                 if(set[4] && isNaN(parseInt(set[4])) == false && set[4] > 0) {
@@ -369,7 +418,7 @@ run = async function() {
 
                 images[set[0]] = {"png": png + ".png", "estrategy": estrategy, "x": parseInt(set[1]), "y": parseInt(set[2]), "timer": timer}
             }
-        } 
+        }
         
         if(!images[0]) {
             return console.log('[' + getHours() + "] Image name must match: Queue_X_Y_Estrategy_TimelapseTimer, Example: 0_-30_70_LUF_120(optional)")
@@ -386,9 +435,7 @@ run = async function() {
 }
 
 imageReader = function(num) {
-    if(!images[num]) {
-        num = 0
-    };
+    if(!images[num]) num = 0
 
     jimp.read('./' + images[num].png, function(err, img) {
         if(err) return console.log(err)
@@ -493,7 +540,11 @@ painter = function(estrategy) {
     }
 
     paint_ChessBottom = function() {
-        for(let i = Object.keys(pixels).length -1; i > jump_pixels; i--) {
+        let i = Object.keys(pixels).length - jump_pixels
+
+        if(i < 0) return paint_LinearBottomRight()
+
+        while(i--) {
             XY = arrayPixel[i]
 
             x = parseInt(XY.substring(0, XY.indexOf(',')))
@@ -507,7 +558,7 @@ painter = function(estrategy) {
             jump_pixels++
         }
 
-        if(typeof c == "undefined") paint_LinearUpperLeft()
+        if(typeof c == "undefined") paint_LinearBottomRight()
     }
 
     Defense = function() {
@@ -519,12 +570,12 @@ painter = function(estrategy) {
 
     switch (estrategy) {
 
-        case "LUF": paint_LinearUpperLeft(); break;
-        case "LBR": paint_LinearBottomRight(); break;
+        case "LUB": case "LBU": case "RAD": case "RADTL": case "RADTR": case "RADBL": case "RADBR": case "LUL": paint_LinearUpperLeft(); break;
+        case "RADOT": case "LBR": paint_LinearBottomRight(); break;
         case "RDM": paint_Random(); break;
         case "JMP": paint_Jump(); break;
-        case "CHU": paint_ChessUpper(); break;
-        case "CHB": paint_ChessBottom(); break;
+        case "LBUCH": case "LUBCH": case "RADCH": case "LULCH": paint_ChessUpper(); break;
+        case "RADOTCH": case "LBRCH": paint_ChessBottom(); break;
         case "Defense": Defense(); break;
 
         default: paint_LinearUpperLeft()
@@ -591,6 +642,10 @@ const colorsRGB = [
 
 for(id = 0; id < colorsRGB.length; id++) {
     colorsIds[`[${colorsRGB[id][0]},${colorsRGB[id][1]},${colorsRGB[id][2]}]`] = id
+}
+
+function dist(x, y) {
+    return Math.sqrt(x * x + y * y);
 }
 
 run();
