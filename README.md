@@ -56,6 +56,10 @@
     * **RADBL** expands from bottom left creating a circle.
     * **RADBR** expands from bottom right creating a circle.
 
+* **additional**
+    * add **#** at the end of your strategy to paint only pixels that have already been painted **(if color ≠ 0 )**, example ``LULCH#``
+    * add **$** at the end of your strategy to paint only pixels that were **NOT** painted **(if color = 0 )**, example ``RAD$``
+
 ***corrections and suggestions***
 
 - [x] Fix y 0 line bug
