@@ -386,7 +386,7 @@ function Bot() {
                 }
                 if(that.net.ready) painter(images[that.options.num].estrategy)
             }
-        }, 20001);
+        }, 5000);
 
         setInterval(() => {
             if(Object.keys(pixels).length == 0) {
