@@ -234,23 +234,36 @@ function Bot() {
 
                         var arrayRGB = `[${RGBimg.r},${RGBimg.g},${RGBimg.b}]`
 
-                        if (RGBimg.a == 255 && typeof colorsIds[arrayRGB] != "undefined") {
+                        if (RGBimg.a == 255) {
 
-                            template[`${x+images[that.options.num].x},${y+images[that.options.num].y}`] = colorsIds[arrayRGB]
+                            if (typeof colorsIds[arrayRGB] != "undefined") {
 
-                            that.options.template_pixels++
-                            if (arrayRGB != `[${RGBchunk.r},${RGBchunk.g},${RGBchunk.b}]`) {
+                                template[`${x+images[that.options.num].x},${y+images[that.options.num].y}`] = colorsIds[arrayRGB]
 
-                                if(estrategy.startsWith("RAD") || estrategy.startsWith("LBU") || estrategy.startsWith("LUB"))
-                                    pre.push([x, y, colorsIds[arrayRGB]])
-                                else pixels[`${x+images[that.options.num].x},${y+images[that.options.num].y}`] = colorsIds[arrayRGB]
+                                that.options.template_pixels++
+                                if (arrayRGB != `[${RGBchunk.r},${RGBchunk.g},${RGBchunk.b}]`) {
 
-                                let red = jimp.rgbaToInt(255, 0, 0, 255);
-                                chunk.setPixelColor(red, x, y)
+                                    function setpixel() {
 
-                            } else {
-                                let opacity = jimp.rgbaToInt(RGBchunk.r, RGBchunk.g, RGBchunk.b, 30);
-                                chunk.setPixelColor(opacity, x, y)
+                                        if(estrategy.startsWith("RAD") || estrategy.startsWith("LBU") || estrategy.startsWith("LUB"))
+                                            pre.push([x, y, colorsIds[arrayRGB]])
+                                        else pixels[`${x+images[that.options.num].x},${y+images[that.options.num].y}`] = colorsIds[arrayRGB]
+
+                                        let red = jimp.rgbaToInt(255, 0, 0, 255);
+                                        chunk.setPixelColor(red, x, y)
+
+                                    }
+
+                                    if(estrategy.indexOf("#") != -1) {
+                                        if(RGBchunk.r + RGBchunk.g + RGBchunk.b < 765) setpixel()
+                                    } else if(estrategy.indexOf("$") != -1) {
+                                        if(RGBchunk.r + RGBchunk.g + RGBchunk.b == 765)  setpixel()
+                                    } else setpixel()
+
+                                } else {
+                                    let opacity = jimp.rgbaToInt(RGBchunk.r, RGBchunk.g, RGBchunk.b, 30);
+                                    chunk.setPixelColor(opacity, x, y)
+                                }
                             }
                         }
                     }
@@ -306,6 +319,11 @@ function Bot() {
 
                 that.options.first_run = false
                 that.net.ready = true
+
+                if(estrategy.indexOf('#') >= 0 || estrategy.indexOf('$') >= 0) {
+                    images[that.options.num].estrategy = estrategy.substring(0,estrategy.length-1)
+                }
+
                 that.paint()
             })
         })
@@ -404,8 +422,16 @@ run = async function() {
                     continue;
                 };
 
-                if(!set[3] || estrategy.indexOf(set[3].toUpperCase()) == -1) {
+                if(!set[3]) {
+
                     estrategy = "LUL"
+
+                } else if(set[3].indexOf('#') >= 0 || set[3].indexOf('$') >= 0) {
+
+                    if(estrategy.indexOf(set[3].substring(0,set[3].length-1).toUpperCase()) == -1) {
+                        estrategy = "LUL"
+                    } else estrategy = set[3].toUpperCase()
+                    
                 } else {
                     estrategy = set[3].toUpperCase()
                 };
